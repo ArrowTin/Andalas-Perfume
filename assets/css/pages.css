@@ -95,7 +95,7 @@
   inset: var(--space-none);
   z-index: -1;
   background: radial-gradient(circle at 50% 40%,
-    color-mix(in srgb, var(--color-highlight) 24%, transparent), transparent 70%);
+    color-mix(in srgb, var(--color-secondary) 18%, transparent), transparent 70%);
   opacity: 0;
   transition: opacity var(--motion-base) var(--ease-out);
 }
@@ -495,7 +495,7 @@
   margin-top: var(--space-lg);
   padding: var(--space-lg);
   border-radius: var(--radius-xl);
-  border-color: color-mix(in srgb, var(--color-highlight) 48%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 32%, transparent);
   transition: border-color var(--motion-base) var(--ease-out),
     box-shadow var(--motion-base) var(--ease-out);
 }
@@ -515,8 +515,8 @@
   border-radius: var(--radius-full);
   pointer-events: none;
   background: radial-gradient(circle,
-    color-mix(in srgb, var(--color-highlight) 62%, transparent),
-    color-mix(in srgb, var(--color-accent) 24%, transparent) 58%,
+    color-mix(in srgb, var(--color-secondary) 40%, transparent),
+    color-mix(in srgb, var(--color-highlight) 20%, transparent) 58%,
     var(--color-transparent) 74%);
   filter: blur(var(--glass-blur-lg));
   opacity: 0.65;

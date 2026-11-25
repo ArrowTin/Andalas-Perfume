@@ -22,11 +22,11 @@
 /* Permukaan kaca: isi translusen, garis cahaya, bayangan kontak dan luas. */
 .glass {
   background: linear-gradient(var(--light-angle),
-    color-mix(in srgb, var(--color-card) 88%, transparent),
-    color-mix(in srgb, var(--color-card) 62%, transparent));
-  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
-  border: var(--border-width) solid color-mix(in srgb, var(--color-card) 75%, transparent);
+    color-mix(in srgb, var(--color-card) 82%, var(--color-muted)),
+    color-mix(in srgb, var(--color-card) 58%, transparent));
+  backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(130%);
+  border: var(--border-width) solid color-mix(in srgb, var(--color-card) 70%, transparent);
   box-shadow: var(--shadow-glass);
 }
 
@@ -36,7 +36,7 @@
   }
 }
 
-/* Bingkai kaca Dylan (Uiverse, MIT): panel inset 5px + blob cahaya di belakangnya. */
+/* Rail kertas: garis tipis dan medan hijau lembut, bukan bingkai kaca bergelembung. */
 .chrome-glass {
   position: relative;
   isolation: isolate;
@@ -58,36 +58,35 @@
   z-index: 2;
   border-radius: inherit;
   background: linear-gradient(var(--light-angle),
-    color-mix(in srgb, var(--color-card) 88%, transparent),
-    color-mix(in srgb, var(--color-card) 62%, transparent));
-  backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-  border: var(--border-width) solid color-mix(in srgb, var(--color-highlight) 55%, transparent);
-  outline: var(--border-width) solid color-mix(in srgb, var(--color-card) 65%, transparent);
-  box-shadow: var(--shadow-glass);
+    color-mix(in srgb, var(--color-card) 94%, transparent),
+    color-mix(in srgb, var(--color-muted) 72%, transparent));
+  backdrop-filter: blur(var(--glass-blur-lg)) saturate(130%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(130%);
+  border: var(--border-width) solid color-mix(in srgb, var(--color-primary) 16%, transparent);
+  outline: var(--border-width) solid var(--color-transparent);
+  box-shadow: none;
 }
 
 .chrome-blob {
   position: absolute;
   z-index: 1;
-  width: 18rem;
-  height: 8rem;
-  top: calc(var(--space-3xl) * -1);
-  left: 6%;
+  width: 22rem;
+  height: 6rem;
+  top: calc(var(--space-lg) * -1);
+  left: 8%;
   border-radius: var(--radius-full);
   background: radial-gradient(circle,
-    color-mix(in srgb, var(--color-highlight) 72%, transparent),
-    color-mix(in srgb, var(--color-accent) 32%, transparent) 55%,
+    color-mix(in srgb, var(--color-secondary) 38%, transparent),
     var(--color-transparent) 72%);
   filter: blur(var(--glass-blur-lg));
-  opacity: 0.7;
+  opacity: 0.55;
   transition: transform var(--motion-glide) var(--ease-glide),
     opacity var(--motion-glide) var(--ease-out);
 }
 
 .chrome-glass:is(:hover, :focus-within) .chrome-blob {
-  transform: translate3d(6%, 18%, 0) scale(1.08);
-  opacity: 0.9;
+  transform: translate3d(4%, 12%, 0) scale(1.04);
+  opacity: 0.7;
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -158,7 +157,7 @@
   background: linear-gradient(var(--light-angle),
     var(--color-accent), var(--color-accent-strong));
   box-shadow: inset var(--border-width) var(--border-width) var(--border-width)
-    color-mix(in srgb, var(--color-highlight) 45%, transparent);
+    color-mix(in srgb, var(--color-highlight) 30%, transparent);
   letter-spacing: var(--space-xs);
 }
 
@@ -170,7 +169,7 @@
   pointer-events: none;
   background: linear-gradient(115deg,
     var(--color-transparent) 36%,
-    color-mix(in srgb, var(--color-highlight) 38%, transparent) 50%,
+    color-mix(in srgb, var(--color-highlight) 28%, transparent) 50%,
     var(--color-transparent) 64%);
   transform: translateX(-120%);
   transition: transform var(--motion-glide) var(--ease-glide);
@@ -182,7 +181,7 @@
 
 .btn-wa:hover {
   box-shadow: inset var(--border-width) var(--border-width) var(--border-width)
-      color-mix(in srgb, var(--color-highlight) 60%, transparent),
+      color-mix(in srgb, var(--color-highlight) 42%, transparent),
     var(--shadow-md);
 }
 
@@ -266,7 +265,7 @@
   z-index: 20;
   border-top: var(--border-none);
   border-inline: var(--border-none);
-  border-bottom: var(--border-width) solid color-mix(in srgb, var(--color-accent-strong) 22%, transparent);
+  border-bottom: var(--border-width) solid color-mix(in srgb, var(--color-primary) 22%, transparent);
   border-radius: var(--radius-none) var(--radius-none) var(--radius-lg) var(--radius-lg);
   transition: border-radius var(--motion-base) var(--ease-out),
     box-shadow var(--motion-base) var(--ease-out),
@@ -417,7 +416,7 @@
   overflow: hidden;
   padding-block: var(--space-3xl) var(--space-2xl);
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--color-highlight) 14%, var(--color-card)),
+    color-mix(in srgb, var(--color-muted) 72%, var(--color-background)),
     var(--color-background));
 }
 
@@ -436,7 +435,7 @@
   left: 4%;
   width: min(32rem, 80vw);
   height: min(32rem, 80vw);
-  background: radial-gradient(circle, color-mix(in srgb, var(--color-highlight) 55%, transparent), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-secondary) 30%, transparent), transparent 70%);
 }
 
 .hero::after {
@@ -444,7 +443,7 @@
   bottom: -14rem;
   width: min(28rem, 70vw);
   height: min(28rem, 70vw);
-  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-highlight) 28%, transparent), transparent 70%);
 }
 
 .hero-grid {
@@ -453,9 +452,11 @@
   align-items: center;
 }
 
+/* Panel dibaca seperti label apotek: garis aksen di kiri, sudut lebih tertahan. */
 .hero-panel {
   padding: var(--space-lg);
-  border-radius: var(--radius-xl);
+  border-left: calc(var(--border-width) * 3) solid var(--color-accent);
+  border-radius: var(--radius-md) var(--radius-xl) var(--radius-xl) var(--radius-md);
 }
 
 .eyebrow {
@@ -511,7 +512,7 @@
 .hero-tagline {
   font-family: var(--font-heading);
   font-size: var(--text-2xl);
-  color: var(--color-accent-strong);
+  color: var(--color-primary);
 }
 
 .hero-desc {
@@ -742,12 +743,13 @@
   filter: drop-shadow(var(--space-none) var(--space-sm) var(--space-md) var(--color-border));
 }
 
+/* Tutup lilin tanah liat, badan kaca ambar, label kertas. */
 .botol-tutup {
-  fill: var(--color-primary);
+  fill: var(--color-accent-strong);
 }
 
 .botol-mulut {
-  fill: color-mix(in srgb, var(--color-primary) 80%, transparent);
+  fill: color-mix(in srgb, var(--color-secondary) 80%, transparent);
 }
 
 .botol-tutup-grup {
@@ -758,12 +760,12 @@
 
 .botol-tutup-garis {
   fill: none;
-  stroke: color-mix(in srgb, var(--color-highlight) 70%, transparent);
+  stroke: color-mix(in srgb, var(--color-card) 55%, transparent);
   stroke-width: 2;
 }
 
 .botol-badan {
-  fill: color-mix(in srgb, var(--color-card) 72%, var(--color-highlight));
+  fill: color-mix(in srgb, var(--color-highlight) 55%, var(--color-card));
   stroke: var(--color-accent-strong);
   stroke-width: 2;
 }
@@ -776,11 +778,11 @@
 }
 
 .botol-label {
-  fill: var(--color-accent);
+  fill: var(--color-card);
 }
 
 .botol-label-tanda {
-  fill: color-mix(in srgb, var(--color-card) 88%, var(--color-highlight));
+  fill: var(--color-accent);
 }
 
 .features {
@@ -847,17 +849,16 @@
 .site-footer {
   padding-block: var(--space-2xl) calc(var(--space-2xl) + var(--tap-min));
   background: linear-gradient(var(--light-angle),
-    color-mix(in srgb, var(--color-primary) 94%, var(--color-accent)),
-    var(--color-primary));
+    var(--color-primary), var(--color-secondary));
   color: var(--color-on-primary);
 }
 
-/* Footer: garis kaca diredupkan agar transisi dari halaman terasa mulus. */
+/* Footer: rail hijau pelan, tanpa kilau emas di seluruh permukaan. */
 .site-footer .chrome-bg::before {
   background: linear-gradient(var(--light-angle),
-    color-mix(in srgb, var(--color-primary) 88%, transparent),
-    color-mix(in srgb, var(--color-primary) 74%, transparent));
-  border-color: color-mix(in srgb, var(--color-highlight) 12%, transparent);
+    color-mix(in srgb, var(--color-primary) 90%, transparent),
+    color-mix(in srgb, var(--color-secondary) 78%, transparent));
+  border-color: color-mix(in srgb, var(--color-highlight) 16%, transparent);
   outline-color: var(--color-transparent);
   box-shadow: none;
 }
@@ -868,10 +869,10 @@
   bottom: calc(var(--space-3xl) * -1);
   left: auto;
   width: 26rem;
-  height: 14rem;
+  height: 12rem;
   background: radial-gradient(circle,
-    color-mix(in srgb, var(--color-accent) 62%, transparent),
-    color-mix(in srgb, var(--color-highlight) 28%, transparent) 58%,
+    color-mix(in srgb, var(--color-accent) 38%, transparent),
+    color-mix(in srgb, var(--color-highlight) 18%, transparent) 58%,
     var(--color-transparent) 74%);
 }
 

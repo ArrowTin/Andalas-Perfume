@@ -161,6 +161,21 @@ test("kontras teks minimal 4.5:1", async () => {
   }
 });
 
+test("variasi Apotek Botanis memakai palet dan tipografi baru", async () => {
+  const token = await baca("../assets/css/tokens.css");
+  const komponen = await baca("../assets/css/components.css");
+  const halaman = await baca("../assets/css/pages.css");
+  for (const nilai of ["#1E3A30", "#3F5D4F", "#A6532A", "#D9B36C",
+    '"Fraunces"', '"DM Sans"']) {
+    assert.ok(token.includes(nilai), `token kehilangan ${nilai}`);
+  }
+  assert.doesNotMatch(token, /#1C1917|#A16207|#E7BE73|#FAF7F1|Cormorant|Montserrat/i);
+  assert.match(komponen, /border-left: calc\(var\(--border-width\) \* 3\) solid var\(--color-accent\)/);
+  assert.match(komponen, /\.botol-label \{[\s\S]*?fill: var\(--color-card\)/);
+  assert.match(komponen, /\.botol-label-tanda \{[\s\S]*?fill: var\(--color-accent\)/);
+  assert.match(halaman, /\.gallery-stage-glow[\s\S]*?var\(--color-secondary\) 40%/);
+});
+
 test("beranda lokal di bawah 1 MB (font eksternal tidak dihitung)", async () => {
   const berkas = [
     "../index.html", "../assets/img/favicon.svg",
@@ -454,8 +469,8 @@ test("tanpa pustaka Motion: hanya transisi CSS yang menghormati gerak", async ()
 test("font hanya meminta bobot yang dipakai dan katalog mencadangkan ruang", async () => {
   for (const halaman of HALAMAN) {
     const html = await baca(halaman);
-    assert.match(html, /Cormorant:wght@400;600/);
-    assert.match(html, /Montserrat:wght@400;600/);
+    assert.match(html, /Fraunces:wght@400;600/);
+    assert.match(html, /DM\+Sans:wght@400;600/);
     assert.doesNotMatch(html, /wght@[0-9;]*[357]/);
   }
   const css = await baca("../assets/css/pages.css");
