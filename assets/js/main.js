@@ -67,18 +67,18 @@ export function initDataUsaha() {
     elemen.textContent = CONFIG.business.phoneDisplay;
   });
 
-  // Jam 24 jam berlabel [?]: tampil sesuai flag, tetap mengajak konfirmasi.
-  if (CONFIG.business.hours.is24h) {
-    document.querySelectorAll("[data-hours]").forEach((elemen) => {
-      elemen.hidden = false;
-    });
-    document.querySelectorAll("[data-hours-label]").forEach((elemen) => {
-      elemen.textContent = "Buka 24 Jam";
-    });
-    document.querySelectorAll("[data-hours-desc]").forEach((elemen) => {
-      elemen.textContent = "Data peta menunjukkan 24 jam. Konfirmasi ulang lewat WhatsApp.";
-    });
-  }
+  // Jam buka sudah dikonfirmasi; teks di HTML dipakai bila JS tidak jalan.
+  const jam = CONFIG.business.hours;
+  const rentang = `${jam.open.replace(":", ".")}–${jam.close.replace(":", ".")}`;
+  document.querySelectorAll("[data-hours]").forEach((elemen) => {
+    elemen.hidden = false;
+  });
+  document.querySelectorAll("[data-hours-label]").forEach((elemen) => {
+    elemen.textContent = jam.label;
+  });
+  document.querySelectorAll("[data-hours-desc]").forEach((elemen) => {
+    elemen.textContent = rentang;
+  });
 }
 
 // Momen botol: tutup diputar dan aroma dikeluarkan dengan transisi CSS saat ditekan.
@@ -153,6 +153,7 @@ export function initSeo() {
   const data = document.querySelector("[data-jsonld]");
   if (!data) return;
   const a = CONFIG.business.address;
+  const jam = CONFIG.business.hours;
   data.textContent = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Store",
@@ -161,6 +162,12 @@ export function initSeo() {
     url,
     telephone: `+${CONFIG.business.waNumber}`,
     hasMap: CONFIG.business.mapsUrl,
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: jam.open,
+      closes: jam.close,
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: a.street,
