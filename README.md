@@ -1,20 +1,21 @@
-# Arie Parfum — Panduan Pemilik
+# Andalas Perfume — Panduan Pemilik
 
 Situs statis portofolio + katalog parfum. Pesan masuk lewat WhatsApp; tidak ada backend, formulir, atau database.
 
 ## 1. Fakta yang sudah dipakai
 
-- Nama: Arie Parfum — Toko Parfum
-- Alamat: RFGM+675, Jl. Perwira, Malo Jelayan, Kec. Bengkayang, Kab. Bengkayang, Kalimantan Barat 79211
-- Telepon/WA: 0823-5306-6305 (nomor hanya disimpan di `assets/js/config.js`)
-- Peta: tautan Google Maps di `assets/js/config.js`
+- Nama: Andalas Perfume — Toko Parfum
+- Alamat: RFJM+5VV, Jl. Bangun Sari, Bumi Amas, Kec. Bengkayang, Kab. Bengkayang, Kalimantan Barat 79211
+- Telepon/WA: 0857-0546-3914 (nomor hanya disimpan di `assets/js/config.js`)
+- Jam buka: setiap hari, 08.00–21.00
+- Peta: https://maps.app.goo.gl/Z2dhfDhwytDAc9kKA (tautan juga tersimpan di `assets/js/config.js`)
 
 ## 2. Cara mengubah data usaha
 
 Edit `assets/js/config.js`:
 
 - `business.name`, `business.category`, `business.address`, `business.phoneDisplay`, `business.waNumber`, `business.mapsUrl`.
-- `business.hours.is24h`: mengontrol badge "Buka 24 Jam". Data ini masih perlu dikonfirmasi; teks di situs sudah mengajak pembeli memastikan lewat WhatsApp.
+- `business.hours`: `label`, `open`, dan `close` mengisi badge, kartu jam, FAQ, dan JSON-LD. Jam saat ini sudah dikonfirmasi: setiap hari 08.00–21.00.
 - `features.showPrices`: `false` membuat semua harga tampil sebagai "Tanya harga".
 - `features.promo`, `features.gallery`, `features.testimonials`: seksi terkait hanya muncul bila bernilai `true` **dan** datanya diisi.
 - `wa.general` dan `wa.product`: template pesan WhatsApp. Jangan memakai HTML di sini.
@@ -70,6 +71,6 @@ Header hosting yang disarankan: `Content-Security-Policy` (izinkan font Google),
 
 ## 7. Yang belum dikonfirmasi
 
-Jam 24 jam, merek/harga asli, status original/racikan/refill, antar/COD/ongkir, foto toko & produk, akun media sosial, domain final, testimoni, dan cerita toko. Semua sengaja tidak ditampilkan sebagai fakta.
+Merek/harga asli, status original/racikan/refill, antar/COD/ongkir, foto toko & produk, akun media sosial, domain final, testimoni, dan cerita toko. Semua sengaja tidak ditampilkan sebagai fakta.
 
 Kontak pengembang diserahkan lewat kanal yang disepakati, bukan disimpan di repositori.

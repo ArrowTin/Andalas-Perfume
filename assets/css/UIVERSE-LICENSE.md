@@ -29,6 +29,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Adaptasi: warna, spasi, radius, dan durasi diganti dengan token Arie Parfum;
+Adaptasi: warna, spasi, radius, dan durasi diganti dengan token Andalas Perfume;
 `transform` dibatasi pada `translate`/`rotate`/`scale` serta `opacity`, dan
 `prefers-reduced-motion` menonaktifkan transisi lewat `base.css`.

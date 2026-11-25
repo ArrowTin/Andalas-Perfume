@@ -20,7 +20,7 @@ function gambar(item) {
   return elemen;
 }
 
-// Ilustrasi unDraw disimpan lokal dan sudah berisi token warna Arie Parfum.
+// Ilustrasi unDraw disimpan lokal dan sudah berisi token warna Andalas Perfume.
 function ilustrasi(item) {
   const mentah = ILUSTRASI[item.illustration ?? ""];
   const pengganti = () => buat("span", "gallery-placeholder", item.label ?? "Contoh");

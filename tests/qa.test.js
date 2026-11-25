@@ -44,12 +44,75 @@ test("sitemap dan robots valid secara struktural", async () => {
 test("nomor WA hanya bersumber dari config.js", async () => {
   const config = await baca("../assets/js/config.js");
   const nomor = /waNumber:\s*"(\d+)"/.exec(config)?.[1];
-  assert.equal(nomor, "6282353066305");
+  assert.equal(nomor, "6285705463914");
   for (const berkas of HALAMAN) {
     assert.ok(!(await baca(berkas)).includes(nomor), `${berkas} meng-hardcode nomor WA`);
   }
   const wa = await baca("../assets/js/whatsapp.js");
   assert.ok(wa.includes("CONFIG.business.waNumber"));
+});
+
+test("identitas dan jam buka Andalas Perfume tersebar konsisten", async () => {
+  const config = await baca("../assets/js/config.js");
+  const js = await baca("../assets/js/main.js");
+  for (const nilai of [
+    'name: "Andalas Perfume"', 'plusCode: "RFJM+5VV"',
+    'street: "Jl. Bangun Sari"', 'village: "Bumi Amas"',
+    'phoneDisplay: "0857-0546-3914"', 'waNumber: "6285705463914"',
+    'mapsUrl: "https://maps.app.goo.gl/Z2dhfDhwytDAc9kKA"',
+    'open: "08:00"', 'close: "21:00"',
+  ]) {
+    assert.ok(config.includes(nilai), `config.js kehilangan ${nilai}`);
+  }
+  for (const berkas of [...HALAMAN, "../assets/img/favicon.svg", "../package.json"]) {
+    assert.doesNotMatch(await baca(berkas), /Arie/i, `${berkas} masih memakai nama lama`);
+  }
+  for (const halaman of HALAMAN.slice(0, 2)) {
+    const html = await baca(halaman);
+    assert.doesNotMatch(html, /24 jam/i, `${halaman} masih menampilkan jam lama`);
+  }
+  const beranda = await baca("../index.html");
+  assert.match(beranda, /data-hours-label>Buka setiap hari/);
+  assert.match(beranda, /data-hours-desc>08\.00–21\.00/);
+  assert.match(js, /openingHoursSpecification/);
+  assert.match(js, /opens: jam\.open/);
+});
+
+test("data usaha dirender ke penanda dan JSON-LD", async () => {
+  const { JSDOM } = await import("jsdom");
+  const dom = new JSDOM(`<!doctype html><html><body>
+    <span data-config="name"></span><p data-config="address"></p>
+    <p data-config="phone"></p><p data-hours hidden></p>
+    <span data-hours-label></span><span data-hours-desc></span>
+    <a data-wa href="#"></a><a data-route href="#"></a><a data-tel href="#"></a>
+    <script type="application/ld+json" data-jsonld></script>
+  </body></html>`, { url: "https://andalas.example/" });
+  globalThis.document = dom.window.document;
+  globalThis.location = dom.window.location;
+  const { initDataUsaha, initSeo } = await import("../assets/js/main.js?identitas-qa");
+  initDataUsaha();
+  initSeo();
+
+  assert.equal(document.querySelector('[data-config="name"]').textContent, "Andalas Perfume");
+  assert.match(document.querySelector('[data-config="address"]').textContent,
+    /RFJM\+5VV, Jl\. Bangun Sari, Bumi Amas/);
+  assert.equal(document.querySelector('[data-config="phone"]').textContent, "0857-0546-3914");
+  assert.equal(document.querySelector("[data-tel]").href, "tel:+6285705463914");
+  const wa = new URL(document.querySelector("[data-wa]").href);
+  assert.equal(`${wa.origin}${wa.pathname}`, "https://wa.me/6285705463914");
+  assert.equal(document.querySelector("[data-route]").href,
+    "https://maps.app.goo.gl/Z2dhfDhwytDAc9kKA");
+  assert.equal(document.querySelector("[data-hours]").hidden, false);
+  assert.equal(document.querySelector("[data-hours-label]").textContent, "Buka setiap hari");
+  assert.equal(document.querySelector("[data-hours-desc]").textContent, "08.00–21.00");
+
+  const ld = JSON.parse(document.querySelector("[data-jsonld]").textContent);
+  assert.equal(ld.name, "Andalas Perfume");
+  assert.equal(ld.telephone, "+6285705463914");
+  assert.equal(ld.openingHoursSpecification.opens, "08:00");
+  assert.equal(ld.openingHoursSpecification.closes, "21:00");
+  delete globalThis.document;
+  delete globalThis.location;
 });
 
 // Token: tidak ada warna literal atau font di luar tokens.css.
@@ -107,7 +170,7 @@ test("beranda lokal di bawah 1 MB (font eksternal tidak dihitung)", async () => 
     "../assets/js/catalog.js", "../assets/js/products.js", "../assets/js/detail.js",
     "../assets/js/promo.js", "../assets/js/content.js", "../assets/js/video-text.js",
     "../assets/js/botol-audio.js",
-    "../assets/video/arie-video-text.webm", "../data/products.json",
+    "../assets/video/andalas-video-text.webm", "../data/products.json",
   ];
   let total = 0;
   for (const nama of berkas) total += (await baca(nama)).length;
@@ -226,9 +289,9 @@ test("Video Text judul memakai video lokal di belakang teks dan fallback aman", 
   const js = await baca("../assets/js/video-text.js");
   const css = await baca("../assets/css/components.css");
   const lisensi = await baca("../assets/js/MAGICUI-LICENSE.md");
-  const video = await readFile(new URL("../assets/video/arie-video-text.webm", import.meta.url));
+  const video = await readFile(new URL("../assets/video/andalas-video-text.webm", import.meta.url));
   assert.match(html, /data-video-text-label data-config="name"/);
-  assert.match(html, /assets\/video\/arie-video-text\.webm/);
+  assert.match(html, /assets\/video\/andalas-video-text\.webm/);
   assert.match(html, /<h1 id="hero-judul" class="judul-video"/);
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
   assert.match(js, /bisaGerak\(\)/);

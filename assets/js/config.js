@@ -1,21 +1,25 @@
 // Sumber tunggal data usaha dan pengaturan fitur.
 export const CONFIG = {
   business: {
-    name: "Arie Parfum",
+    name: "Andalas Perfume",
     category: "Toko Parfum",
     address: {
-      plusCode: "RFGM+675",
-      street: "Jl. Perwira",
-      village: "Malo Jelayan",
+      plusCode: "RFJM+5VV",
+      street: "Jl. Bangun Sari",
+      village: "Bumi Amas",
       district: "Bengkayang",
       regency: "Bengkayang",
       province: "Kalimantan Barat",
       postalCode: "79211",
     },
-    phoneDisplay: "0823-5306-6305",
-    waNumber: "6282353066305",
-    mapsUrl: "https://maps.app.goo.gl/d6wrRSZdUt7naff59",
-    hours: { is24h: true }, // [?] perlu konfirmasi pemilik
+    phoneDisplay: "0857-0546-3914",
+    waNumber: "6285705463914",
+    mapsUrl: "https://maps.app.goo.gl/Z2dhfDhwytDAc9kKA",
+    hours: {
+      label: "Buka setiap hari",
+      open: "08:00",
+      close: "21:00",
+    },
     social: { instagram: null, facebook: null, tiktok: null },
     about: null, // [?] cerita toko belum disiapkan
     // [?] Foto asli belum ada: placeholder memakai ilustrasi unDraw berlabel "Contoh".
@@ -37,7 +41,7 @@ export const CONFIG = {
     delivery: false, // [?] antar/COD belum dikonfirmasi
   },
   wa: {
-    general: "Halo Arie Parfum, saya ingin bertanya tentang produk parfum.",
-    product: "Halo Arie Parfum, saya ingin tanya/pesan: {nama} ({ukuran}). Apakah tersedia?",
+    general: "Halo Andalas Perfume, saya ingin bertanya tentang produk parfum.",
+    product: "Halo Andalas Perfume, saya ingin tanya/pesan: {nama} ({ukuran}). Apakah tersedia?",
   },
 };

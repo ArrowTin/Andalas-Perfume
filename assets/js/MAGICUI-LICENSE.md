@@ -25,4 +25,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Video tekstur (`assets/video/arie-video-text.webm`) dibuat khusus untuk proyek ini.
+Video tekstur (`assets/video/andalas-video-text.webm`) dibuat khusus untuk proyek ini.
