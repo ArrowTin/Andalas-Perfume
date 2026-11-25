@@ -1,0 +1,1024 @@
+/* Komponen bersama. Semua nilai visual hanya memakai token. */
+.skip-link {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-md);
+  z-index: 50;
+  transform: translateY(-200%);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  color: var(--color-foreground);
+}
+
+.skip-link:focus {
+  transform: translateY(var(--space-none));
+}
+
+[id] {
+  scroll-margin-top: var(--space-3xl);
+}
+
+/* Permukaan kaca: isi translusen, garis cahaya, bayangan kontak dan luas. */
+.glass {
+  background: linear-gradient(var(--light-angle),
+    color-mix(in srgb, var(--color-card) 88%, transparent),
+    color-mix(in srgb, var(--color-card) 62%, transparent));
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  border: var(--border-width) solid color-mix(in srgb, var(--color-card) 75%, transparent);
+  box-shadow: var(--shadow-glass);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: var(--color-card);
+  }
+}
+
+/* Bingkai kaca Dylan (Uiverse, MIT): panel inset 5px + blob cahaya di belakangnya. */
+.chrome-glass {
+  position: relative;
+  isolation: isolate;
+}
+
+.chrome-bg {
+  position: absolute;
+  inset: var(--space-none);
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.chrome-bg::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-xs);
+  z-index: 2;
+  border-radius: inherit;
+  background: linear-gradient(var(--light-angle),
+    color-mix(in srgb, var(--color-card) 88%, transparent),
+    color-mix(in srgb, var(--color-card) 62%, transparent));
+  backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
+  border: var(--border-width) solid color-mix(in srgb, var(--color-highlight) 55%, transparent);
+  outline: var(--border-width) solid color-mix(in srgb, var(--color-card) 65%, transparent);
+  box-shadow: var(--shadow-glass);
+}
+
+.chrome-blob {
+  position: absolute;
+  z-index: 1;
+  width: 18rem;
+  height: 8rem;
+  top: calc(var(--space-3xl) * -1);
+  left: 6%;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--color-highlight) 72%, transparent),
+    color-mix(in srgb, var(--color-accent) 32%, transparent) 55%,
+    var(--color-transparent) 72%);
+  filter: blur(var(--glass-blur-lg));
+  opacity: 0.7;
+  transition: transform var(--motion-glide) var(--ease-glide),
+    opacity var(--motion-glide) var(--ease-out);
+}
+
+.chrome-glass:is(:hover, :focus-within) .chrome-blob {
+  transform: translate3d(6%, 18%, 0) scale(1.08);
+  opacity: 0.9;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .chrome-bg::before {
+    background: var(--color-card);
+  }
+}
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: var(--tap-min);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  text-align: center;
+  transition: opacity var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+
+.btn-accent {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.btn-accent:hover {
+  opacity: 0.88;
+  transform: translateY(calc(var(--motion-shift) * -1));
+}
+
+.btn-outline {
+  border: var(--border-width) solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-none);
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--color-primary);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+
+.btn-outline:hover::before {
+  opacity: 1;
+}
+
+.btn-outline:hover {
+  color: var(--color-on-primary);
+  transform: translateY(calc(var(--motion-shift) * -1));
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Varian Uiverse (MIT, lihat assets/css/UIVERSE-LICENSE.md) disesuaikan ke token. */
+.btn-wa {
+  overflow: hidden;
+  background: linear-gradient(var(--light-angle),
+    var(--color-accent), var(--color-accent-strong));
+  box-shadow: inset var(--border-width) var(--border-width) var(--border-width)
+    color-mix(in srgb, var(--color-highlight) 45%, transparent);
+  letter-spacing: var(--space-xs);
+}
+
+.btn-wa::after {
+  content: "";
+  position: absolute;
+  inset: var(--space-none);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(115deg,
+    var(--color-transparent) 36%,
+    color-mix(in srgb, var(--color-highlight) 38%, transparent) 50%,
+    var(--color-transparent) 64%);
+  transform: translateX(-120%);
+  transition: transform var(--motion-glide) var(--ease-glide);
+}
+
+.btn-wa:is(:hover, :focus-visible)::after {
+  transform: translateX(120%);
+}
+
+.btn-wa:hover {
+  box-shadow: inset var(--border-width) var(--border-width) var(--border-width)
+      color-mix(in srgb, var(--color-highlight) 60%, transparent),
+    var(--shadow-md);
+}
+
+.btn-wa:active {
+  letter-spacing: var(--space-none);
+}
+
+.btn-arrow {
+  width: var(--space-lg);
+  height: var(--space-lg);
+  fill: none;
+  stroke: var(--color-current);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--motion-base) var(--ease-glide);
+}
+
+.btn:is(:hover, :focus-visible) > .btn-arrow {
+  transform: translateX(var(--motion-shift));
+}
+
+.btn-route {
+  overflow: hidden;
+  perspective: 300px;
+}
+
+.btn-route > span {
+  display: block;
+  transition: transform var(--motion-base) var(--ease-glide),
+    opacity var(--motion-base) var(--ease-out);
+}
+
+.btn-route::after {
+  content: attr(data-alt);
+  position: absolute;
+  inset: var(--space-none);
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  opacity: 0;
+  transform: rotateX(90deg);
+  transition: transform var(--motion-base) var(--ease-glide),
+    opacity var(--motion-base) var(--ease-out);
+}
+
+.btn-route:hover > span,
+.btn-route:focus-visible > span {
+  opacity: 0;
+  transform: rotateX(-90deg);
+}
+
+.btn-route:hover::after,
+.btn-route:focus-visible::after {
+  opacity: 1;
+  transform: rotateX(0);
+}
+
+.btn-card::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-none);
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--space-md) 50%,
+    color-mix(in srgb, var(--color-highlight) 70%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+
+.btn-card:hover::before,
+.btn-card:focus-visible::before {
+  opacity: 1;
+}
+
+.site-header {
+  position: sticky;
+  top: var(--space-none);
+  z-index: 20;
+  border-top: var(--border-none);
+  border-inline: var(--border-none);
+  border-bottom: var(--border-width) solid color-mix(in srgb, var(--color-accent-strong) 22%, transparent);
+  border-radius: var(--radius-none) var(--radius-none) var(--radius-lg) var(--radius-lg);
+  transition: border-radius var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) var(--ease-out);
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: color-mix(in srgb, var(--color-accent) 48%, transparent);
+  box-shadow: 0 var(--space-sm) var(--space-xl) calc(var(--space-sm) * -1)
+    color-mix(in srgb, var(--color-primary) 18%, transparent);
+}
+
+.header-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-height: var(--tap-min);
+  padding-block: var(--space-sm);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: var(--fw-semibold);
+}
+
+.brand-mark {
+  width: var(--space-xl);
+  height: var(--space-xl);
+  fill: var(--color-accent);
+}
+
+.site-nav {
+  position: relative;
+}
+
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  border-radius: var(--radius-md);
+  color: var(--color-foreground);
+}
+
+.nav-toggle svg {
+  width: var(--space-xl);
+  height: var(--space-xl);
+  fill: none;
+  stroke: var(--color-current);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: transform var(--motion-base) var(--ease-out);
+}
+
+.nav-toggle:where([aria-expanded="true"]) svg {
+  transform: rotate(45deg);
+}
+
+.nav-list {
+  display: block;
+  position: absolute;
+  top: 100%;
+  right: var(--space-none);
+  z-index: 30;
+  min-width: 11rem;
+  padding: var(--space-sm);
+  border-radius: var(--radius-lg);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(calc(var(--motion-shift) * -1)) scale(0.98);
+  transform-origin: top right;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out),
+    visibility var(--motion-fast) var(--ease-out);
+}
+
+.nav-list.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.nav-list a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  transition: background var(--motion-base) var(--ease-out),
+    color var(--motion-base) var(--ease-out);
+}
+
+.nav-list a::after {
+  content: "";
+  position: absolute;
+  left: var(--space-md);
+  right: var(--space-md);
+  bottom: var(--space-xs);
+  height: var(--border-width);
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-base) var(--ease-glide);
+}
+
+.nav-list a:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+
+.nav-list a:is(:hover, :focus-visible) {
+  color: var(--color-accent-strong);
+  background: color-mix(in srgb, var(--color-highlight) 16%, transparent);
+}
+
+.nav-list.is-open li {
+  animation: nav-masuk var(--motion-base) var(--ease-glide) both;
+}
+
+.nav-list.is-open li:nth-child(2) { animation-delay: var(--motion-fast); }
+.nav-list.is-open li:nth-child(3) { animation-delay: var(--motion-base); }
+.nav-list.is-open li:nth-child(4) { animation-delay: var(--motion-slow); }
+.nav-list.is-open li:nth-child(5) { animation-delay: var(--space-sm); }
+
+@keyframes nav-masuk {
+  from { opacity: 0; transform: translateY(calc(var(--motion-shift) * -2)); }
+  to { opacity: 1; transform: none; }
+}
+
+.header-wa {
+  display: none;
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--space-3xl) var(--space-2xl);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--color-highlight) 14%, var(--color-card)),
+    var(--color-background));
+}
+
+/* Medan cahaya memberi objek bagi blur kaca; tidak bergerak. */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+}
+
+.hero::before {
+  top: -14rem;
+  left: 4%;
+  width: min(32rem, 80vw);
+  height: min(32rem, 80vw);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-highlight) 55%, transparent), transparent 70%);
+}
+
+.hero::after {
+  right: -8rem;
+  bottom: -14rem;
+  width: min(28rem, 70vw);
+  height: min(28rem, 70vw);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 70%);
+}
+
+.hero-grid {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.hero-panel {
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+}
+
+.eyebrow {
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-accent-strong);
+}
+
+.hero h1 {
+  margin-block: var(--space-sm);
+  font-size: var(--text-4xl);
+}
+
+/* Video Text: tekstur tipis di belakang huruf, judul tetap paling atas. */
+.judul-video {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.judul-video [data-video-text-label] {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 var(--space-xs) var(--space-md)
+    color-mix(in srgb, var(--color-card) 88%, transparent);
+}
+
+.video-text-media {
+  position: absolute;
+  z-index: 1;
+  inset: var(--space-none);
+  display: none;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-slow) var(--ease-out);
+}
+
+.video-text-media.is-aktif {
+  display: block;
+  opacity: 0.24;
+}
+
+.video-text-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-tagline {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  color: var(--color-accent-strong);
+}
+
+.hero-desc {
+  max-width: 34rem;
+  margin-top: var(--space-md);
+  color: var(--color-muted-foreground);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--color-highlight) 30%, var(--color-card));
+  color: var(--color-foreground);
+  font-size: var(--text-sm);
+}
+
+.badge svg,
+.feature-card svg {
+  flex: none;
+  width: var(--space-lg);
+  height: var(--space-lg);
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.hero-visual {
+  display: grid;
+  place-items: center;
+}
+
+/* Momen ikonik: satu botol kaca dengan tilt pointer dan sapuan kilau. */
+.flacon {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 20rem);
+  padding: var(--space-lg);
+  border-radius: var(--radius-xl);
+  transform: perspective(50rem) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform var(--motion-base) var(--ease-out);
+}
+
+.flacon-glint {
+  position: absolute;
+  inset: var(--space-none);
+  z-index: 2;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.flacon-glint::after {
+  content: "";
+  position: absolute;
+  inset: var(--space-none);
+  background: linear-gradient(115deg, transparent 35%,
+    color-mix(in srgb, var(--color-card) 70%, transparent) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform var(--motion-glide) var(--ease-glide);
+}
+
+.flacon:hover .flacon-glint::after {
+  transform: translateX(120%);
+}
+
+/* Aroma: delapan gelembung naik dari mulut botol saat tutup dibuka. */
+.aroma {
+  position: absolute;
+  inset: var(--space-none);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.aroma span {
+  --aroma-ukuran: var(--space-sm);
+  --aroma-drift: var(--space-none);
+  --aroma-naik: var(--space-2xl);
+  --aroma-durasi: var(--motion-glide);
+  --aroma-tunda: var(--motion-none);
+  position: absolute;
+  top: 20%;
+  left: var(--space-none);
+  width: var(--aroma-ukuran);
+  height: var(--aroma-ukuran);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--color-highlight) 78%, transparent);
+  box-shadow: inset var(--space-none) var(--border-width) var(--space-none)
+    color-mix(in srgb, var(--color-card) 80%, transparent),
+    var(--space-none) var(--space-none) var(--space-sm)
+    color-mix(in srgb, var(--color-highlight) 45%, transparent);
+  opacity: 0;
+  transform: translate3d(var(--space-none), var(--space-none), var(--space-none)) scale(0.45);
+}
+
+.aroma span:nth-child(1) {
+  left: calc(50% - var(--space-xl));
+  --aroma-ukuran: var(--space-xs);
+  --aroma-drift: calc(var(--space-md) * -0.8);
+  --aroma-naik: var(--space-xl);
+  --aroma-durasi: calc(var(--motion-glide) * 0.95);
+}
+
+.aroma span:nth-child(2) {
+  left: calc(50% - var(--space-md));
+  --aroma-ukuran: var(--space-sm);
+  --aroma-drift: calc(var(--space-sm) * -1);
+  --aroma-naik: var(--space-2xl);
+  --aroma-durasi: calc(var(--motion-glide) * 1.15);
+  --aroma-tunda: calc(var(--motion-fast) * 0.4);
+}
+
+.aroma span:nth-child(3) {
+  left: 50%;
+  --aroma-ukuran: var(--space-md);
+  --aroma-drift: var(--space-sm);
+  --aroma-naik: calc(var(--space-2xl) * 0.85);
+  --aroma-durasi: calc(var(--motion-glide) * 0.85);
+  --aroma-tunda: calc(var(--motion-base) * 0.3);
+}
+
+.aroma span:nth-child(4) {
+  left: calc(50% + var(--space-md));
+  --aroma-ukuran: var(--space-xs);
+  --aroma-drift: var(--space-md);
+  --aroma-naik: var(--space-2xl);
+  --aroma-durasi: calc(var(--motion-glide) * 1.25);
+  --aroma-tunda: calc(var(--motion-slow) * 0.3);
+}
+
+.aroma span:nth-child(5) {
+  left: calc(50% + var(--space-xl));
+  --aroma-ukuran: var(--space-sm);
+  --aroma-drift: calc(var(--space-lg) * 0.8);
+  --aroma-naik: var(--space-xl);
+  --aroma-durasi: calc(var(--motion-glide) * 1.05);
+  --aroma-tunda: calc(var(--motion-base) * 0.6);
+}
+
+.aroma span:nth-child(6) {
+  left: calc(50% - var(--space-lg));
+  --aroma-ukuran: var(--space-xs);
+  --aroma-drift: calc(var(--space-sm) * -1.5);
+  --aroma-naik: var(--space-2xl);
+  --aroma-durasi: calc(var(--motion-glide) * 1.35);
+  --aroma-tunda: calc(var(--motion-slow) * 0.6);
+}
+
+.aroma span:nth-child(7) {
+  left: calc(50% + var(--space-sm));
+  --aroma-ukuran: var(--space-sm);
+  --aroma-drift: var(--space-xs);
+  --aroma-naik: calc(var(--space-2xl) * 0.9);
+  --aroma-durasi: calc(var(--motion-glide) * 0.9);
+  --aroma-tunda: calc(var(--motion-fast) * 0.8);
+}
+
+.aroma span:nth-child(8) {
+  left: calc(50% - var(--space-sm));
+  --aroma-ukuran: var(--space-xs);
+  --aroma-drift: calc(var(--space-sm) * -0.5);
+  --aroma-naik: calc(var(--space-2xl) * 1.1);
+  --aroma-durasi: calc(var(--motion-glide) * 1.45);
+  --aroma-tunda: calc(var(--motion-slow) * 0.9);
+}
+
+@keyframes aroma-menguap {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--space-none), var(--space-none), var(--space-none)) scale(0.45);
+  }
+
+  20% {
+    opacity: 0.9;
+  }
+
+  60% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--aroma-drift), calc(var(--aroma-naik) * -1),
+      var(--space-none)) scale(1.35);
+  }
+}
+
+/* Tutup terangkat dan aroma menguap hanya saat botol dibuka. */
+.flacon[aria-pressed="true"] .botol-tutup-grup {
+  transform: translateY(calc(var(--space-sm) * -1)) rotate(12deg);
+}
+
+.flacon[aria-pressed="true"] .aroma span {
+  animation: aroma-menguap var(--aroma-durasi) var(--ease-glide) var(--aroma-tunda) infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flacon[aria-pressed="true"] .aroma span {
+    animation: none;
+    opacity: 0.55;
+    transform: translate3d(var(--space-none), calc(var(--aroma-naik) * -0.35),
+      var(--space-none)) scale(0.9);
+    will-change: auto;
+  }
+}
+
+.botol {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 16rem);
+  filter: drop-shadow(var(--space-none) var(--space-sm) var(--space-md) var(--color-border));
+}
+
+.botol-tutup {
+  fill: var(--color-primary);
+}
+
+.botol-mulut {
+  fill: color-mix(in srgb, var(--color-primary) 80%, transparent);
+}
+
+.botol-tutup-grup {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--motion-slow) var(--ease-glide);
+}
+
+.botol-tutup-garis {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-highlight) 70%, transparent);
+  stroke-width: 2;
+}
+
+.botol-badan {
+  fill: color-mix(in srgb, var(--color-card) 72%, var(--color-highlight));
+  stroke: var(--color-accent-strong);
+  stroke-width: 2;
+}
+
+.botol-kilau {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-card) 85%, transparent);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.botol-label {
+  fill: var(--color-accent);
+}
+
+.botol-label-tanda {
+  fill: color-mix(in srgb, var(--color-card) 88%, var(--color-highlight));
+}
+
+.features {
+  padding-block: var(--space-2xl);
+}
+
+.section-title {
+  font-size: var(--text-3xl);
+}
+
+.section-intro {
+  margin-top: var(--space-sm);
+  color: var(--color-muted-foreground);
+}
+
+.feature-grid {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.feature-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--space-lg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--motion-base) var(--ease-out);
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-none);
+  z-index: -1;
+  background: linear-gradient(var(--light-angle),
+    color-mix(in srgb, var(--color-highlight) 30%, transparent), transparent 65%);
+  opacity: 0;
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card:hover {
+  transform: translateY(calc(var(--motion-shift) * -1));
+}
+
+.feature-card h3 {
+  margin-top: var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+}
+
+.feature-card p {
+  margin-top: var(--space-sm);
+  color: var(--color-muted-foreground);
+}
+
+.site-footer {
+  padding-block: var(--space-2xl) calc(var(--space-2xl) + var(--tap-min));
+  background: linear-gradient(var(--light-angle),
+    color-mix(in srgb, var(--color-primary) 94%, var(--color-accent)),
+    var(--color-primary));
+  color: var(--color-on-primary);
+}
+
+/* Footer: garis kaca diredupkan agar transisi dari halaman terasa mulus. */
+.site-footer .chrome-bg::before {
+  background: linear-gradient(var(--light-angle),
+    color-mix(in srgb, var(--color-primary) 88%, transparent),
+    color-mix(in srgb, var(--color-primary) 74%, transparent));
+  border-color: color-mix(in srgb, var(--color-highlight) 12%, transparent);
+  outline-color: var(--color-transparent);
+  box-shadow: none;
+}
+
+.site-footer .chrome-blob {
+  top: auto;
+  right: -4rem;
+  bottom: calc(var(--space-3xl) * -1);
+  left: auto;
+  width: 26rem;
+  height: 14rem;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--color-accent) 62%, transparent),
+    color-mix(in srgb, var(--color-highlight) 28%, transparent) 58%,
+    var(--color-transparent) 74%);
+}
+
+.footer-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.footer-title {
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--fw-semibold);
+}
+
+.footer-grid p,
+.footer-links {
+  opacity: 0.9;
+}
+
+.footer-cta {
+  margin-top: var(--space-md);
+}
+
+.footer-links a,
+.footer-route {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  color: var(--color-on-primary);
+  transition: color var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-glide);
+}
+
+.footer-links a::after,
+.footer-route::after {
+  content: "";
+  position: absolute;
+  left: var(--space-none);
+  right: var(--space-none);
+  bottom: var(--space-sm);
+  height: var(--border-width);
+  border-radius: var(--radius-full);
+  background: var(--color-highlight);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-base) var(--ease-glide);
+}
+
+.footer-links a:is(:hover, :focus-visible)::after,
+.footer-route:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+
+.footer-links a:is(:hover, :focus-visible),
+.footer-route:is(:hover, :focus-visible) {
+  color: var(--color-highlight);
+  transform: translateX(var(--motion-shift));
+}
+
+.footer-bottom {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: var(--border-width) solid color-mix(in srgb, var(--color-highlight) 12%, transparent);
+  font-size: var(--text-sm);
+  text-align: center;
+  opacity: 0.82;
+}
+
+.fab-wa {
+  position: fixed;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--motion-base) var(--ease-out),
+    opacity var(--motion-base) var(--ease-out);
+}
+
+.fab-wa:hover {
+  transform: translateY(calc(var(--motion-shift) * -1));
+  opacity: 0.92;
+}
+
+.fab-wa:active {
+  transform: scale(0.97);
+}
+
+.fab-wa svg {
+  width: var(--space-xl);
+  height: var(--space-xl);
+  fill: var(--color-current);
+}
+
+@media (min-width: 48rem) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-list {
+    display: flex;
+    position: static;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-none);
+    border: var(--border-none);
+    border-radius: var(--radius-none);
+    background: var(--color-transparent);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .nav-list a {
+    padding: var(--space-sm);
+  }
+
+  .header-wa {
+    display: inline-flex;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+
+  .feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
