@@ -258,25 +258,27 @@ export function initMuncul() {
 	});
 }
 
-// Kain drapi hanya bergelombang saat terlihat, dengan gerak diizinkan.
-export function initKain() {
-	const kain = document.querySelector("[data-kain]");
-	if (!kain || !bisaGerak()) return;
+// Sapuan cahaya etalase berjalan sekali saat hero terlihat dan gerak diizinkan.
+export function initEtalase() {
+	const etalase = document.querySelector(".hero-stage");
+	if (!etalase || !bisaGerak()) return;
 
 	if (!("IntersectionObserver" in globalThis)) {
-		kain.classList.add("is-berkibar");
+		etalase.classList.add("is-siap");
 		return;
 	}
 
 	const pengamat = new IntersectionObserver(
 		(entri) => {
 			entri.forEach((butir) => {
-				kain.classList.toggle("is-berkibar", butir.isIntersecting);
+				if (!butir.isIntersecting) return;
+				etalase.classList.add("is-siap");
+				pengamat.disconnect();
 			});
 		},
-		{ threshold: 0.2 },
+		{ threshold: 0.35 },
 	);
-	pengamat.observe(kain);
+	pengamat.observe(etalase);
 }
 
 // Menu mobile: tombol membuka/ menutup daftar nav.
@@ -309,7 +311,7 @@ initDataUsaha();
 initSeo();
 initChrome();
 initMuncul();
-initKain();
+initEtalase();
 initNavigasi();
 
 const slug = new URLSearchParams(globalThis.location?.search ?? "").get("p");

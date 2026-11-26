@@ -239,17 +239,17 @@ test("kontras teks minimal 4.5:1", async () => {
 	}
 });
 
-test("variasi Arsip Pelaut memakai palet dan tipografi baru", async () => {
+test("variasi Etalase Kaca memakai palet dan tipografi baru", async () => {
 	const token = await baca("../assets/css/tokens.css");
 	const komponen = await baca("../assets/css/components.css");
 	const halaman = await baca("../assets/css/pages.css");
 	for (const nilai of [
-		"#5A1F2E",
-		"#8C3F4A",
-		"#0E6B63",
-		"#D4A24C",
-		'"Playfair Display"',
-		'"Work Sans"',
+		"#143D47",
+		"#2D6C74",
+		"#8A5A17",
+		"#E3C98C",
+		'"Bodoni Moda"',
+		'"Manrope"',
 	]) {
 		assert.ok(
 			token.toLowerCase().includes(nilai.toLowerCase()),
@@ -258,11 +258,11 @@ test("variasi Arsip Pelaut memakai palet dan tipografi baru", async () => {
 	}
 	assert.doesNotMatch(
 		token,
-		/#1E3A30|#3F5D4F|#A6532A|#D9B36C|Fraunces|DM Sans/i,
+		/#5A1F2E|#8C3F4A|#0E6B63|#D4A24C|Playfair Display|Work Sans/i,
 	);
 	assert.match(
 		komponen,
-		/border-bottom: calc\(var\(--border-width\) \* 3\) solid var\(--color-primary\)/,
+		/\.hero-stage \{[\s\S]*?border-radius: var\(--radius-xl\)/,
 	);
 	assert.match(komponen, /\.botol-label \{[\s\S]*?fill: var\(--color-card\)/);
 	assert.match(
@@ -275,69 +275,66 @@ test("variasi Arsip Pelaut memakai palet dan tipografi baru", async () => {
 	);
 });
 
-test("tata letak poster, kain bergelombang, dan transisi baru", async () => {
+test("tata letak etalase, rel katalog, undakan zigzag, dan transisi baru", async () => {
 	const html = await baca("../index.html");
 	const komponen = await baca("../assets/css/components.css");
 	const halaman = await baca("../assets/css/pages.css");
 	const utama = await baca("../assets/js/main.js");
 
-	// Susunan baru: judul penuh lebar → isi|botol → tiket, bukan panel dua kolom lama.
-	assert.match(html, /class="container hero-poster"/);
-	assert.match(html, /<div class="hero-head">/);
-	assert.match(html, /<div class="hero-ticket">/);
-	assert.doesNotMatch(html, /hero-grid|hero-panel/);
-	assert.match(komponen, /\.hero-poster \{[\s\S]*?display: grid/);
-	assert.match(
-		komponen,
-		/\.hero-ticket \{[\s\S]*?border-block: var\(--border-width\) dashed/,
+	// Susunan baru: punggung vertikal + kotak kaca, plakat menimpa, katalog naik ke atas.
+	assert.match(html, /class="container hero-etalase"/);
+	assert.match(html, /class="hero-spine"/);
+	assert.match(html, /<div class="hero-stage glass">/);
+	assert.match(html, /<div class="hero-placard glass">/);
+	assert.doesNotMatch(html, /hero-poster|hero-ticket|data-kain|kain-lapis/);
+	assert.ok(
+		html.indexOf('id="katalog"') < html.indexOf('id="keunggulan"'),
+		"katalog harus mendahului keunggulan",
 	);
+	assert.match(komponen, /\.hero-etalase \{[\s\S]*?perspective: 60rem/);
+	assert.match(komponen, /\.hero-placard \{[\s\S]*?margin-left: calc/);
 
-	// Fitur jadi indeks bernomor, cara pesan jadi linimasa, kontak jadi kartu pos.
-	assert.match(html, /ol class="feature-grid"/);
-	assert.match(html, /class="feature-no"/);
+	// Fitur jadi pita label, katalog jadi rel geser, cara pesan jadi undakan zigzag.
+	assert.match(html, /<ul class="feature-grid">/);
+	assert.doesNotMatch(html, /class="feature-no"/);
 	assert.match(html, /<div class="container step-layout">/);
 	assert.match(
-		komponen,
-		/\.feature-card \{[\s\S]*?grid-template-columns: auto 1fr/,
+		halaman,
+		/\[data-catalog\] \.product-grid \{[\s\S]*?scroll-snap-type: x mandatory/,
 	);
 	assert.match(
 		halaman,
-		/\.step-grid::before \{[\s\S]*?background: linear-gradient\(\s*180deg,/,
+		/\.step-card:nth-child\(even\) \{[\s\S]*?margin-top: var\(--space-3xl\)/,
 	);
+	assert.match(halaman, /\.contact-grid::before \{[\s\S]*?linear-gradient/);
 	assert.match(halaman, /\.map-card \{[\s\S]*?grid-column: 1 \/ -1/);
 
-	// Kain: tiga lapis SVG, hanya bergerak via keyframe transform saat terlihat.
-	assert.equal((html.match(/class="kain-lapis kain-lapis--/g) ?? []).length, 3);
-	assert.match(html, /<span class="kain" data-kain aria-hidden="true">/);
+	// Sapuan kaca sekali jalan saat hero terlihat, mati pada reduced-motion.
+	assert.match(html, /class="case-sheen"/);
 	assert.match(
 		komponen,
-		/@keyframes kain-gelombang \{[\s\S]*?transform: skewY\(-2deg\)/,
-	);
-	assert.match(
-		komponen,
-		/\.kain\.is-berkibar \.kain-lapis--1 \{[\s\S]*?animation:/,
+		/\.hero-stage\.is-siap \.case-sheen \{[\s\S]*?animation: sapuan-kaca/,
 	);
 	assert.match(
 		komponen,
-		/prefers-reduced-motion: reduce[\s\S]*?\.kain\.is-berkibar \.kain-lapis \{[\s\S]*?animation: none/,
+		/@keyframes sapuan-kaca \{[\s\S]*?transform: translateX\(120%\)/,
 	);
-	assert.match(utama, /function initKain\(\)/);
-	assert.match(utama, /initKain\(\);/);
 	assert.match(
-		utama,
-		/kain\.classList\.toggle\("is-berkibar", butir\.isIntersecting\)/,
+		komponen,
+		/prefers-reduced-motion: reduce[\s\S]*?\.hero-stage\.is-siap \.case-sheen \{[\s\S]*?animation: none/,
 	);
+	assert.match(utama, /function initEtalase\(\)/);
+	assert.match(utama, /initEtalase\(\);/);
+	assert.match(utama, /pengamat\.disconnect\(\)/);
+	assert.doesNotMatch(utama, /initKain|data-kain/);
 
-	// Transisi berbeda: tirai vertikal tombol WA dan tab geser nav.
+	// Transisi berbeda: tirai dari tengah pada tombol dan manik kaca pada nav.
+	assert.match(komponen, /\.btn-wa::after \{[\s\S]*?transform: scaleX\(0\)/);
 	assert.match(
 		komponen,
-		/\.btn-wa::after \{[\s\S]*?transform: translateY\(-110%\)/,
+		/\.nav-list a::after \{[\s\S]*?translateY\(-50%\) scale\(0\)/,
 	);
-	assert.match(
-		komponen,
-		/\.nav-list a::after \{[\s\S]*?translate3d\(calc\(var\(--space-lg\) \* -1\)/,
-	);
-	assert.doesNotMatch(komponen, /translateX\(-120%\)/);
+	assert.doesNotMatch(komponen, /translateY\(-110%\)/);
 	assert.doesNotMatch(komponen, /#[0-9a-fA-F]{3,8}\b|rgba?\(/);
 });
 
@@ -579,7 +576,10 @@ test("galeri setengah cincin menampilkan lima foto berlabel Contoh", async () =>
 	assert.match(css, /clamp\(8rem, 34vw, 12rem\)/);
 	assert.match(css, /perspective: 60rem/);
 	assert.match(css, /\.gallery-ring\.is-animasi > li\.is-utama \{/);
-	assert.match(css, /transition:[\s\S]{0,80}?transform 620ms var\(--ease-glide\)/);
+	assert.match(
+		css,
+		/transition:[\s\S]{0,80}?transform 620ms var\(--ease-glide\)/,
+	);
 	assert.match(css, /\.gallery-ring\.tanpa-gerak/);
 	assert.match(ilustrasi, /var\(--color-accent\)/);
 	assert.doesNotMatch(ilustrasi, /#[0-9a-fA-F]{3,8}\b/);
@@ -700,8 +700,8 @@ test("tanpa pustaka Motion: hanya transisi CSS yang menghormati gerak", async ()
 test("font hanya meminta bobot yang dipakai dan katalog mencadangkan ruang", async () => {
 	for (const halaman of HALAMAN) {
 		const html = await baca(halaman);
-		assert.match(html, /Playfair\+Display:wght@400;600/);
-		assert.match(html, /Work\+Sans:wght@400;600/);
+		assert.match(html, /Bodoni\+Moda:wght@400;600/);
+		assert.match(html, /Manrope:wght@400;600/);
 		assert.doesNotMatch(html, /wght@[0-9;]*[357]/);
 	}
 	const css = await baca("../assets/css/pages.css");

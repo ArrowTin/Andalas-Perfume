@@ -1,30 +1,30 @@
-/* Token visual: variasi Arsip Pelaut (T38), turunan MASTER.md. */
+/* Token visual: variasi Etalase Kaca (T39), turunan MASTER.md. */
 :root {
-	/* Warna: kertas blush, tinta plum, merah tua, teal laut, kuning kuningan. */
-	--color-primary: #5a1f2e;
+	/* Warna: es pucat, tinta teal, kuningan dan sampanye. */
+	--color-primary: #143d47;
 	--color-on-primary: #ffffff;
-	--color-secondary: #8c3f4a;
+	--color-secondary: #2d6c74;
 	--color-on-secondary: #ffffff;
-	--color-accent: #0e6b63;
+	--color-accent: #8a5a17;
 	--color-on-accent: #ffffff;
-	--color-accent-strong: #0a4f49;
-	--color-highlight: #d4a24c;
-	--color-background: #f3e8dd;
-	--color-foreground: #241a22;
-	--color-card: #fff9f2;
-	--color-card-foreground: #241a22;
-	--color-muted: #ead9cc;
-	--color-muted-foreground: #5c4b50;
-	--color-border: #d6c2b4;
+	--color-accent-strong: #6e4a12;
+	--color-highlight: #e3c98c;
+	--color-background: #e8f0f1;
+	--color-foreground: #12262c;
+	--color-card: #fcfefe;
+	--color-card-foreground: #12262c;
+	--color-muted: #d8e6e8;
+	--color-muted-foreground: #4a6268;
+	--color-border: #b9cfd2;
 	--color-destructive: #b42318;
 	--color-on-destructive: #ffffff;
-	--color-ring: #5a1f2e;
+	--color-ring: #143d47;
 	--color-transparent: transparent;
 	--color-current: currentColor;
 
-	/* Tipografi: editorial letterpress + sans netral. */
-	--font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
-	--font-body: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+	/* Tipografi: serif fashion berkontras tinggi + sans geometris. */
+	--font-heading: "Bodoni Moda", "Times New Roman", Georgia, serif;
+	--font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
 	--text-xs: 0.75rem;
 	--text-sm: 0.875rem;
 	--text-base: 1rem;
@@ -71,9 +71,9 @@
 	--shadow-lg: 0 10px 15px rgb(0 0 0 / 0.1);
 	--shadow-xl: 0 20px 25px rgb(0 0 0 / 0.15);
 	--shadow-glass:
-		inset 0 1px 0 rgb(255 255 255 / 0.7),
-		inset 0 -1px 0 rgb(90 31 46 / 0.08), 0 1px 2px rgb(90 31 46 / 0.06),
-		0 18px 40px -14px rgb(90 31 46 / 0.28);
+		inset 0 1px 0 rgb(255 255 255 / 0.85),
+		inset 0 -1px 0 rgb(20 61 71 / 0.08), 0 1px 2px rgb(20 61 71 / 0.06),
+		0 18px 40px -14px rgb(20 61 71 / 0.24);
 
 	/* Gerak & tata letak */
 	--motion-fast: 150ms;
@@ -86,7 +86,7 @@
 	--ease-glide: cubic-bezier(0.22, 1, 0.36, 1);
 	--glass-blur: 12px;
 	--glass-blur-lg: 24px;
-	--light-angle: 145deg;
+	--light-angle: 135deg;
 	--container-max: 70rem;
 }
 

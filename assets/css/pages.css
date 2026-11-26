@@ -38,6 +38,29 @@
 	min-height: 87rem;
 }
 
+/* Beranda: etalase mendatar dengan snap, bukan grid tumpuk. */
+[data-catalog] .product-grid {
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(15rem, 22rem);
+	grid-template-columns: none;
+	min-height: 30rem;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	padding-bottom: var(--space-md);
+	scrollbar-color: var(--color-secondary) var(--color-muted);
+}
+
+[data-catalog] .product-grid > * {
+	scroll-snap-align: start;
+}
+
+.rail-hint {
+	margin-top: calc(var(--space-lg) * -1);
+	color: var(--color-accent-strong);
+	font-size: var(--text-sm);
+	font-weight: var(--fw-semibold);
+}
+
 /* Rute detail memakai ruang yang sama saat grid disembunyikan. */
 :root[data-detail-route] .product-grid,
 :root[data-detail-route] .detail-view:not([hidden]) {
@@ -257,11 +280,30 @@
 	font-size: var(--text-3xl);
 }
 
-/* Kartu pos: alamat dan telepon berdampingan, peta mengisi Amplop lebar. */
+/* Meja kasir: pita cahaya di atas dua panel kaca, peta mengisi baris penuh. */
 .contact-grid {
+	position: relative;
+	isolation: isolate;
 	display: grid;
 	gap: var(--space-md);
 	margin-top: var(--space-lg);
+	padding-top: var(--space-lg);
+}
+
+.contact-grid::before {
+	content: "";
+	position: absolute;
+	top: var(--space-none);
+	left: var(--space-none);
+	right: var(--space-none);
+	height: var(--space-sm);
+	border-radius: var(--radius-full);
+	background: linear-gradient(
+		90deg,
+		var(--color-transparent),
+		color-mix(in srgb, var(--color-highlight) 72%, transparent),
+		var(--color-transparent)
+	);
 }
 
 .contact-card,
@@ -272,8 +314,8 @@
 	margin: var(--space-none);
 	padding: var(--space-lg);
 	border: var(--border-width) solid
-		color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
-	border-radius: var(--radius-none);
+		color-mix(in srgb, var(--color-card) 88%, transparent);
+	border-radius: var(--radius-lg);
 	background: linear-gradient(
 		var(--light-angle),
 		color-mix(in srgb, var(--color-card) 96%, transparent),
@@ -281,7 +323,7 @@
 	);
 	backdrop-filter: blur(var(--glass-blur)) saturate(140%);
 	-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
-	box-shadow: var(--shadow-sm);
+	box-shadow: var(--shadow-glass);
 	transition:
 		border-color var(--motion-base) var(--ease-out),
 		box-shadow var(--motion-base) var(--ease-out),
@@ -320,7 +362,7 @@
 	display: flex;
 	align-items: center;
 	gap: var(--space-sm);
-	font-family: var(--font-body);
+	font-family: var(--font-heading);
 	font-size: var(--text-lg);
 	color: var(--color-accent-strong);
 }
@@ -386,7 +428,7 @@
 	margin-top: var(--space-md);
 }
 
-/* Linimasa: satu garis vertikal, setiap langkah menggantung di sisinya. */
+/* Undakan zigzag: kartu bergantian di dua sisi jalur tengah. */
 .step-layout {
 	display: grid;
 	gap: var(--space-lg);
@@ -395,43 +437,52 @@
 .step-grid {
 	position: relative;
 	display: grid;
+	grid-template-columns: 1fr;
 	gap: var(--space-lg);
 	margin-top: var(--space-lg);
-	padding-left: var(--space-2xl);
 }
 
 .step-grid::before {
 	content: "";
+	display: none;
 	position: absolute;
-	top: var(--space-md);
-	bottom: var(--space-md);
-	left: var(--space-md);
+	top: var(--space-none);
+	bottom: var(--space-none);
+	left: 50%;
 	width: var(--border-width);
 	background: linear-gradient(
 		180deg,
 		var(--color-accent),
-		color-mix(in srgb, var(--color-border) 70%, transparent)
+		var(--color-transparent)
 	);
+	transform: translateX(-50%);
 }
 
 .step-card {
 	position: relative;
+	width: 100%;
 	padding: var(--space-md) var(--space-lg);
-	border: var(--border-width) solid var(--color-border);
-	border-left: calc(var(--border-width) * 3) solid var(--color-accent);
-	border-radius: var(--radius-md);
-	background: var(--color-card);
+	border: var(--border-width) solid
+		color-mix(in srgb, var(--color-card) 84%, transparent);
+	border-top: calc(var(--border-width) * 3) solid var(--color-accent);
+	border-radius: var(--radius-lg);
+	background: linear-gradient(
+		var(--light-angle),
+		color-mix(in srgb, var(--color-card) 90%, transparent),
+		color-mix(in srgb, var(--color-muted) 48%, transparent)
+	);
+	backdrop-filter: blur(var(--glass-blur));
+	-webkit-backdrop-filter: blur(var(--glass-blur));
+	box-shadow: var(--shadow-glass);
 }
 
 .step-number {
-	position: absolute;
-	top: var(--space-md);
-	left: calc(var(--space-2xl) * -1);
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	width: var(--space-xl);
 	height: var(--space-xl);
+	margin-bottom: var(--space-sm);
 	border-radius: var(--radius-full);
 	background: var(--color-accent);
 	color: var(--color-on-accent);
@@ -439,7 +490,7 @@
 }
 
 .step-card h3 {
-	font-family: var(--font-body);
+	font-family: var(--font-heading);
 	font-size: var(--text-lg);
 }
 
@@ -992,8 +1043,31 @@
 	}
 
 	.step-layout {
-		grid-template-columns: 0.8fr 1.2fr;
-		align-items: start;
+		grid-template-columns: 1fr;
+	}
+
+	.step-intro {
+		max-width: 32rem;
+	}
+
+	.step-grid {
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: var(--space-2xl);
+	}
+
+	.step-grid::before {
+		display: block;
+	}
+
+	.step-card:nth-child(odd) {
+		grid-column: 1;
+		justify-self: start;
+	}
+
+	.step-card:nth-child(even) {
+		grid-column: 2;
+		justify-self: end;
+		margin-top: var(--space-3xl);
 	}
 
 	.contact-grid {
@@ -1009,5 +1083,13 @@
 	.product-grid {
 		grid-template-columns: repeat(4, 1fr);
 		min-height: 22rem;
+	}
+}
+
+/* Etalase beranda tetap mendatar walaupun katalog penuh memakai grid. */
+@media (min-width: 48rem) {
+	[data-catalog] .product-grid {
+		grid-template-columns: none;
+		min-height: 30rem;
 	}
 }
